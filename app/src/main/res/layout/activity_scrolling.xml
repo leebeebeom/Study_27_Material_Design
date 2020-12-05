@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ScrollingActivity">
+
+    <!--    상단의 툴바 영역으로 스크롤에 의해 확대와 축소가 가능한 영역-->
+    <!--    수직으로 자식뷰를 가질 수 있음-->
+    <!--    height 는 축소되지 않았을때의 높이-->
+    <!--    AppBarlayout 의 자식은 어떤 뷰든 축소 될 수있음-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/Theme.27_Material_Design.AppBarOverlay">
+        <!--        자식뷰가 있어야 축소가 가능하며 scrollFlags 는 AppBarLayout 이 제공함-->
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:toolbarId="@+id/toolbar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/Theme.27_Material_Design.PopupOverlay" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+<!--        아래로 스크롤 하다 위로 올렸을때 탭만 보임-->
+<!--        근데 안되네 왜 안되지-->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:tabTextColor="@color/teal_200"
+            android:fitsSystemWindows="true"
+            android:background="@color/teal_200"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_scrolling" />
+<!--    layout_anchor 속성은 CoordinatorLayout 과 그 자식에 부여할 수 있는데,-->
+<!--    Anchor 를 지정한 뷰는 anchor 가 움직이면 함께 움직임-->
+<!--    anchorGravity 는 anchor 와의 위치 관께를 지정해줌-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
